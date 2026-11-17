@@ -1,0 +1,12 @@
+services:
+  core:
+    build:
+      context: .
+      dockerfile: containers/core/Dockerfile
+    environment:
+      SGD3DGS_DATA_DIR: /data
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - "${SGD3DGS_DATA_DIR:-./data}:/data"
+    profiles: ["api"]

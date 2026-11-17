@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/sapankowski/sgd3dgs-app/schemas/scene-manifest-0.1.schema.json",
+  "title": "SGD3DGS Scene Manifest 0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "scene_id",
+    "display_name",
+    "coordinate_system",
+    "source",
+    "objects"
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{64}$"
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?![\\\\/])(?!.*(?:^|[\\\\/])\\.\\.(?:[\\\\/]|$)).+"
+    },
+    "transform": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "translation": {
+          "type": "array",
+          "prefixItems": [{ "type": "number" }, { "type": "number" }, { "type": "number" }],
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "rotation_xyzw": {
+          "type": "array",
+          "prefixItems": [
+            { "type": "number" },
+            { "type": "number" },
+            { "type": "number" },
+            { "type": "number" }
+          ],
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "uniform_scale": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "scene_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "display_name": { "type": "string", "minLength": 1 },
+    "coordinate_system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["up_axis"],
+      "properties": {
+        "up_axis": { "enum": ["+X", "-X", "+Y", "-Y", "+Z", "-Z"] },
+        "handedness": { "enum": ["left", "right"], "default": "right" },
+        "unit": { "enum": ["unknown", "meter"], "default": "unknown" },
+        "meters_per_unit": { "type": ["number", "null"], "exclusiveMinimum": 0 }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "format", "gaussian_count"],
+      "properties": {
+        "path": { "$ref": "#/$defs/relative_path" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "format": { "enum": ["3dgs-ply", "sog-v2"] },
+        "gaussian_count": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "cameras": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": { "$ref": "#/$defs/relative_path" },
+            "sha256": { "$ref": "#/$defs/sha256" }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "labels": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256",
+            "format",
+            "gaussian_count",
+            "method",
+            "method_version"
+          ],
+          "properties": {
+            "path": { "$ref": "#/$defs/relative_path" },
+            "sha256": { "$ref": "#/$defs/sha256" },
+            "format": { "enum": ["npy-uint16", "ply-property-uint16"] },
+            "gaussian_count": { "type": "integer", "minimum": 1 },
+            "method": { "type": "string", "minLength": 1 },
+            "method_version": { "type": "string", "minLength": 1 },
+            "confidence_path": {
+              "anyOf": [{ "$ref": "#/$defs/relative_path" }, { "type": "null" }]
+            }
+          }
+        },
+        { "type": "null" }
+      ]
+    },
+    "objects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["object_id", "name"],
+        "properties": {
+          "object_id": { "type": "integer", "minimum": 1, "maximum": 65533 },
+          "name": { "type": "string", "minLength": 1 },
+          "movable": { "type": "boolean", "default": true },
+          "initial_transform": { "$ref": "#/$defs/transform" },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

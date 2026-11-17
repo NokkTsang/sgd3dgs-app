@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sgd3dgs-core"
+version = "0.1.0"
+description = "Scene contracts and offline pipeline services for SGD3DGS"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+license = { text = "MIT" }
+dependencies = [
+  "pydantic>=2.10,<3",
+  "rich>=13.9,<15",
+  "typer>=0.15,<1",
+]
+
+[project.optional-dependencies]
+api = [
+  "fastapi>=0.115,<1",
+  "uvicorn[standard]>=0.34,<1",
+]
+
+[project.scripts]
+sgd3dgs = "sgd3dgs_core.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sgd3dgs_core"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers --cov=sgd3dgs_core --cov-report=term-missing"
+testpaths = ["tests"]

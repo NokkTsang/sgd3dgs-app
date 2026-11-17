@@ -1,0 +1,22 @@
+name: Repository checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/verify_repository.sh
+      - name: Reject common committed artifact extensions
+        run: |
+          if git ls-files | grep -E '\.(ply|splat|ksplat|spz|sog|pt|pth|ckpt|safetensors)$'; then
+            echo "Large scene/model artifact tracked by Git. Store it outside the repository."
+            exit 1
+          fi

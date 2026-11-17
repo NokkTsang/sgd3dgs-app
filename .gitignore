@@ -1,0 +1,47 @@
+# Local configuration
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Node/editor
+node_modules/
+dist/
+
+# IDE and OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Scene data, weights, and generated artifacts
+data/scenes/
+data/models/
+data/cache/
+data/outputs/
+*.ply
+*.splat
+*.ksplat
+*.spz
+*.sog
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+
+# Build and temporary files
+build/
+tmp/
+*.log

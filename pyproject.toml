@@ -1,0 +1,41 @@
+[project]
+name = "sgd3dgs-workspace"
+version = "0.1.0"
+description = "Application workspace for interactive object-level 3D Gaussian Splatting"
+requires-python = ">=3.11,<3.13"
+dependencies = ["sgd3dgs-core"]
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["services/core"]
+
+[tool.uv.sources]
+sgd3dgs-core = { workspace = true }
+
+[dependency-groups]
+dev = [
+  "jsonschema>=4.23,<5",
+  "mypy>=1.15,<2",
+  "pytest>=8.3,<9",
+  "pytest-cov>=6,<7",
+  "ruff>=0.11,<1",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["apps/editor"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+packages = ["sgd3dgs_core"]
+mypy_path = "services/core/src"

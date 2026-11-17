@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.1",
+  "scene_id": "minimal-fixture",
+  "display_name": "Minimal manifest fixture",
+  "coordinate_system": {
+    "up_axis": "+Y",
+    "handedness": "right",
+    "unit": "unknown",
+    "meters_per_unit": null
+  },
+  "source": {
+    "path": "scene.fixture",
+    "sha256": "ca0596548f1f5fa9cf32ce6f6efe968d621301647f04dab61d184931aca91f39",
+    "format": "3dgs-ply",
+    "gaussian_count": 3
+  },
+  "cameras": null,
+  "labels": {
+    "path": "object-id.fixture",
+    "sha256": "c7eee9673e1db2006c8aebc84b595b173d1112914e0b62725133c720dec8ec1d",
+    "format": "npy-uint16",
+    "gaussian_count": 3,
+    "method": "fixture",
+    "method_version": "1",
+    "confidence_path": null
+  },
+  "objects": [
+    {
+      "object_id": 1,
+      "name": "example object",
+      "movable": true,
+      "initial_transform": {
+        "translation": [0.0, 0.0, 0.0],
+        "rotation_xyzw": [0.0, 0.0, 0.0, 1.0],
+        "uniform_scale": 1.0
+      },
+      "notes": "Metadata-only test fixture"
+    }
+  ]
+}

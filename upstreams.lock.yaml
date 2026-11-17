@@ -1,0 +1,9 @@
+schema_version: 1
+updated: 2026-11-17
+projects:
+  supersplat:
+    url: https://github.com/playcanvas/supersplat.git
+    commit: 30b5a42c6a90f46e4b698356a7b597290fb9fea1
+    license: MIT
+    location: apps/editor
+    integration: source-snapshot

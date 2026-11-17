@@ -1,0 +1,42 @@
+name: Core CI
+
+on:
+  pull_request:
+    paths:
+      - "services/core/**"
+      - "schemas/**"
+      - "examples/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "Makefile"
+      - "scripts/uv.sh"
+      - ".github/workflows/core.yml"
+  push:
+    branches: [main]
+    paths:
+      - "services/core/**"
+      - "schemas/**"
+      - "examples/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "Makefile"
+      - "scripts/uv.sh"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+          enable-cache: true
+      - run: ./scripts/uv.sh sync --all-packages --extra api
+      - run: ./scripts/uv.sh run ruff check services/core
+      - run: ./scripts/uv.sh run ruff format --check services/core
+      - run: ./scripts/uv.sh run mypy
+      - run: ./scripts/uv.sh run pytest
+      - run: ./scripts/uv.sh run sgd3dgs validate --check-files examples/minimal-scene/scene.json

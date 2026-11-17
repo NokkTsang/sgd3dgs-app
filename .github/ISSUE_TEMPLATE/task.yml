@@ -1,0 +1,49 @@
+name: Weekly task
+description: A bounded Wednesday-to-Tuesday implementation or documentation outcome
+title: "[Task]: "
+labels: ["task"]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        A normal task should fit approximately 5–8 hours and produce evidence at
+        the Tuesday meeting. Split larger work before starting.
+  - type: input
+    id: outcome
+    attributes:
+      label: Outcome
+      description: What observable result should exist by Tuesday?
+      placeholder: A click on a labelled Gaussian selects the complete object.
+    validations:
+      required: true
+  - type: input
+    id: owner
+    attributes:
+      label: Owner and reviewer
+      placeholder: Owner @name; reviewer @name
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: In scope
+      description: List the smallest work needed for the outcome.
+    validations:
+      required: true
+  - type: textarea
+    id: excluded
+    attributes:
+      label: Explicitly out of scope
+      description: State tempting adjacent work that should not be included.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Definition of done and evidence
+      placeholder: Tests, commands, metrics, screenshot, recording, or report.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and stopping condition
+      description: What is needed first, and when should the owner stop/escalate?
